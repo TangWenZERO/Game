@@ -1,47 +1,73 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #1a1a1a;
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(145deg, #1e1e2e, #252536);
+  border-bottom: 1px solid rgba(100, 100, 255, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
+  background: linear-gradient(90deg, #8a2be2, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+}
+
+.navItem {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.navItem:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .center {
   display: flex;
-  gap: 2rem;
-}
-
-.navItem {
-  color: #ffffff;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.navItem:hover {
-  background-color: #333333;
+  gap: 1.5rem;
 }
 
 .right {
   display: flex;
   align-items: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .center {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

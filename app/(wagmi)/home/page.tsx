@@ -30,14 +30,14 @@ export default function HomePage() {
   });
 
   // 构建批量读取题目详情的配置
-  const questionsConfig = [];
+  const questionsConfig: any[] = [];
   if (questionCount && Number(questionCount) > 0) {
     for (let i = 1; i <= Number(questionCount); i++) {
       questionsConfig.push({
         address: QUIZ_CONTRACT_ADDRESS,
         abi: quizAbi.abi,
         functionName: "questions",
-        args: [i],
+        args: [BigInt(i)],
       });
     }
   }
@@ -51,16 +51,41 @@ export default function HomePage() {
     contracts: questionsConfig,
   });
 
+  // 解析题目内容
+  const parseQuestionContent = (contentUri: string) => {
+    try {
+      // 如果是十六进制字符串，则解析为普通文本
+      if (contentUri.startsWith('0x')) {
+        const hex = contentUri.slice(2);
+        const str = Buffer.from(hex, 'hex').toString('utf8');
+        
+        // 解析题目文本
+        if (str.includes('Question:')) {
+          const lines = str.split('\n');
+          const questionLine = lines[0];
+          return questionLine.replace('Question: ', '');
+        }
+        
+        return str;
+      }
+      return contentUri;
+    } catch (e) {
+      return contentUri;
+    }
+  };
+
   // 当题目数据变化时，更新状态
   useEffect(() => {
     if (questionsData && questionsData.length > 0) {
       const formattedQuestions = questionsData.map((questionData, index) => {
-        const question = questionData.result as any;
+        const question: any = questionData.result;
+        const parsedContent = parseQuestionContent(question?.contentUri);
+        
         return {
           id: index + 1,
           creator: question?.creator,
           token: question?.token,
-          contentUri: question?.contentUri,
+          contentUri: parsedContent,
           rewardPool: question?.rewardPool?.toString(),
           participationFee: question?.participationFee?.toString(),
           startAt: question?.startAt?.toString(),

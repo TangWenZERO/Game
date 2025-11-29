@@ -28,3 +28,24 @@ export const formatTimestamp = (value?: number | bigint | null) => {
 
 export const QUIZ_CONTRACT_ADDRESS =
   "0x5FbDB2315678afecb367f032d93F642f64180aa3" as const; // Quiz合约地址
+
+export function toHex(str: string) {
+  const encoder = new TextEncoder();
+  const bytes = encoder.encode(str);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+export function fromHex(hexStr: string) {
+  if (hexStr.length % 2 !== 0) {
+    throw new Error("Invalid hex string length.");
+  }
+
+  const bytes = [];
+  for (let i = 0; i < hexStr.length; i += 2) {
+    bytes.push(parseInt(hexStr.slice(i, i + 2), 16));
+  }
+
+  const decoder = new TextDecoder();
+  return decoder.decode(new Uint8Array(bytes));
+}

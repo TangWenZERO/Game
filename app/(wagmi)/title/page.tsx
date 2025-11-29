@@ -1,11 +1,16 @@
 "use client";
 import { useState } from "react";
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import {
+  useAccount,
+  useWriteContract,
+  useWaitForTransactionReceipt,
+} from "wagmi";
+import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
 import HeaderPlan from "../components/HeaderPlan";
 import styles from "./style.module.css";
 import quizAbi from "@/app/abi/StakedQuiz.json";
-import { QUIZ_CONTRACT_ADDRESS } from "@/app/utils/utils";
+import { QUIZ_CONTRACT_ADDRESS, toHex } from "@/app/utils/utils";
 
 const TitlePage = () => {
   const router = useRouter();
@@ -18,14 +23,15 @@ const TitlePage = () => {
   const [correctOptionId, setCorrectOptionId] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false); // 控制确认弹框显示
   const [isCreating, setIsCreating] = useState(false); // 控制创建状态
-  
+
   // wagmi写合约相关hook
   const { data: hash, writeContract, isPending } = useWriteContract();
-  
+
   // 等待交易完成
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
 
   const handleAddOption = () => {
     const newId =
@@ -33,7 +39,7 @@ const TitlePage = () => {
     setOptions([...options, { id: newId, text: "", isCorrect: false }]);
   };
 
-  const handleRemoveOption = (id) => {
+  const handleRemoveOption = (id: any) => {
     if (options.length <= 2) return; // 至少保留两个选项
     setOptions(options.filter((option) => option.id !== id));
     if (correctOptionId === id) {
@@ -41,13 +47,13 @@ const TitlePage = () => {
     }
   };
 
-  const handleOptionChange = (id, text) => {
+  const handleOptionChange = (id: any, text: any) => {
     setOptions(
       options.map((option) => (option.id === id ? { ...option, text } : option))
     );
   };
 
-  const handleSetCorrect = (id) => {
+  const handleSetCorrect = (id: any) => {
     setCorrectOptionId(id);
     setOptions(
       options.map((option) =>
@@ -85,44 +91,37 @@ const TitlePage = () => {
     setIsCreating(true);
 
     try {
-      // 准备题目数据
+      // 将题目和选项内容转换为十六进制数据
       const questionData = {
         question,
-        options,
+        options: options.map((opt) => ({
+          id: opt.id,
+          text: opt.text,
+          isCorrect: opt.isCorrect,
+        })),
         correctOptionId,
-        creatorAddress: address,
-        createdAt: new Date().toISOString(),
-        rewardAmount: "0.01",
-        currency: "ETH",
-        status: "pending",
       };
 
-      // 获取正确答案
-      const correctOption = options.find(opt => opt.id === correctOptionId);
-      const correctAnswerIndex = options.findIndex(opt => opt.id === correctOptionId);
-
-      // 生成答案哈希 (简化实现)
-      const answerSalt = "0x" + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
-      const answerHash = "0x" + Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('');
+      const HX = toHex(`${questionData}`);
 
       // 调用智能合约创建问题
       writeContract({
         address: QUIZ_CONTRACT_ADDRESS,
         abi: quizAbi.abi,
-        functionName: 'createQuestion',
+        functionName: "createQuestion",
         args: [
           "0x0000000000000000000000000000000000000000", // 使用ETH作为代币地址
-          question, // 题目内容
-          answerHash, // 答案哈希
+          HX, // 题目和选项的十六进制内容
+          correctOptionId, // 答案值
           "10000000000000000", // 奖励池 (0.01 ETH)
           "1000000000000000", // 参与费用 (0.001 ETH)
           Math.floor(Date.now() / 1000), // 开始时间
-          Math.floor(Date.now() / 1000) + 7 * 24 * 3600 // 结束时间 (7天后)
-        ]
+          Math.floor(Date.now() / 1000) + 1 * 24 * 3600, // 结束时间 (7天后)
+        ],
       });
 
       alert("题目创建成功！");
-      
+
       // 跳转到个人中心页面
       router.push("/profile");
 

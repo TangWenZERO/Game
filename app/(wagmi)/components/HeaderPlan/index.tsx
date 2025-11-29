@@ -26,6 +26,15 @@ const HeaderPlan = () => {
         <Link href="/profile" className={styles.navItem}>
           个人中心
         </Link>
+        <Link href="/details" className={styles.navItem}>
+          题目详情
+        </Link>
+        <Link href="/datastorage" className={styles.navItem}>
+          数据存储
+        </Link>
+        <Link href="/quizdata" className={styles.navItem}>
+          Quiz数据
+        </Link>
       </nav>
 
       <div className={styles.right}>
