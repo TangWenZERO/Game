@@ -1,0 +1,33 @@
+.tabPlan {
+  margin-top: 20px;
+}
+
+.tabPlan button {
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.tabPlan button:hover {
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 卡片悬停效果 */
+.cardHover {
+  transition: all 0.3s ease;
+}
+
+.cardHover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(100, 100, 255, 0.3);
+}

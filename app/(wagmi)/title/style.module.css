@@ -1,0 +1,364 @@
+.formCard {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(145deg, #1e1e2e, #252536);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(100, 100, 255, 0.2);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: linear-gradient(145deg, #1e1e2e, #252536);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid rgba(100, 100, 255, 0.2);
+  padding: 2rem;
+}
+
+.modalHeader {
+  text-align: center;
+  color: white;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+.section {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  color: #1890ff;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.questionContent {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  color: white;
+  min-height: 60px;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid #434343;
+}
+
+.optionItemCorrect {
+  composes: optionItem;
+  border: 2px solid #52c41a;
+}
+
+.optionLabel {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: white;
+}
+
+.optionText {
+  flex: 1;
+  color: white;
+}
+
+.correctTag {
+  background: #52c41a;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancelButton {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  border: 1px solid #434343;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.confirmButton {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  border: 1px solid #52c41a;
+  background: #52c41a;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.confirmButton:hover {
+  background: #73d13d;
+  border-color: #73d13d;
+}
+
+/* 新增的样式类 */
+
+.pageContainer {
+  padding: 2rem;
+}
+
+.headerContainer {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  background: linear-gradient(90deg, #8a2be2, #00bfff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+}
+
+.subtitle {
+  color: #666;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.formSection {
+  margin-bottom: 1.5rem;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-weight: bold;
+}
+
+.required {
+  color: #ff4d4f;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #434343;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  outline: none;
+}
+
+.characterCount {
+  text-align: right;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #aaa;
+}
+
+.optionContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+
+.optionInputWrapper {
+  position: relative;
+  flex: 1;
+}
+
+.optionInput {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #434343;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.optionInput:focus {
+  outline: none;
+}
+
+.requiredMark {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ff4d4f;
+  font-size: 0.8rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  color: white;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.radioButton {
+  margin-right: 5px;
+}
+
+.removeButton {
+  background: transparent;
+  border: 1px solid #ff4d4f;
+  color: #ff4d4f;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.addButton {
+  background: transparent;
+  border: 1px solid #1890ff;
+  color: #1890ff;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.addButton:hover {
+  background: rgba(24, 144, 255, 0.1);
+}
+
+.infoBox {
+  background: rgba(24, 144, 255, 0.1);
+  border: 1px solid rgba(24, 144, 255, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoTitle {
+  margin: 0 0 0.75rem 0;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.infoList {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: #aaa;
+}
+
+.infoItem {
+  margin-bottom: 0.25rem;
+}
+
+.lastInfoItem {
+  margin-bottom: 0;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cancelFormButton {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  border: 1px solid #434343;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancelFormButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.createButton {
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  border: 1px solid #1890ff;
+  background: #1890ff;
+  color: white;
+  cursor: pointer;
+  opacity: 1;
+  transition: all 0.3s;
+}
+
+.createButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.createButton:hover:not(:disabled) {
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+/* 质押信息相关样式 */
+.stakingInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stakingInfo:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.stakingLabel {
+  color: #aaa;
+  font-weight: bold;
+}
+
+.stakingValue {
+  color: white;
+  font-weight: bold;
+  text-align: right;
+}
